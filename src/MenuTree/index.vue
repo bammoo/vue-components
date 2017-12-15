@@ -38,42 +38,37 @@
 </div>
 </template>
 
-<style lang="less" rel="stylesheet/less">
-  .tree-node-root.dragging  .tree-node-name {
-      pointer-events: none;
+<style>
+.tree-node-root.dragging  .tree-node-name {
+    pointer-events: none;
+}
+.tree-node-root .el-tree-node__content .el-tree-node__expand-icon {
+  border: transparent;
+}
+
+// label 右边加 箭头
+.tree-node-root .el-tree-node__content .el-tree-node__label{
+  &:after{
+    font-family: 'element-icons' !important;
+    margin-left: 8px;
+    content: "";
   }
-  .tree-node-root {
-
-    .el-tree-node__content {
-      .el-tree-node__expand-icon {
-        border: transparent;
-      }
-
-      // label 右边加 箭头
-      .el-tree-node__label{
-        &:after{
-          font-family: 'element-icons' !important;
-          margin-left: 8px;
-          content: "";
-        }
-      }
-      .el-tree-node__expand-icon+.el-checkbox+.el-tree-node__label{
-        &:after{
-          content: "\E600";
-        }
-      }
-
-      .el-tree-node__expand-icon.is-leaf+.el-checkbox+.el-tree-node__label{
-        &:after{
-          content: "";
-        }
-      }
-
-      .el-tree-node__expand-icon.expanded+.el-checkbox+.el-tree-node__label{
-        &:after{
-          content: "\E603";
-        }
-      }
-    }
+}
+.tree-node-root .el-tree-node__content .el-tree-node__expand-icon+.el-checkbox+.el-tree-node__label{
+  &:after{
+    content: "\E600";
   }
+}
+
+.tree-node-root .el-tree-node__content .el-tree-node__expand-icon.is-leaf+.el-checkbox+.el-tree-node__label{
+  &:after{
+    content: "";
+  }
+}
+
+.tree-node-root .el-tree-node__content .el-tree-node__expand-icon.expanded+.el-checkbox+.el-tree-node__label{
+  &:after{
+    content: "\E603";
+  }
+}
 </style>
