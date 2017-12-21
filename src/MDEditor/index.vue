@@ -5,10 +5,9 @@
 </template>
 
 <script>
-import SimpleMDE from 'simplemde';
-import 'simplemde/dist/simplemde.min.css';
-// import './font-awesome.css';
-import './iconfont/iconfont.css';
+import SimpleMDE from 'simplemde'
+import 'simplemde/dist/simplemde.min.css'
+import './iconfont/iconfont.css'
 import {getHeadingFunction, getUploadFunction} from './functions'
 
 export default {
