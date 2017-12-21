@@ -7,7 +7,9 @@
 <script>
 import SimpleMDE from 'simplemde';
 import 'simplemde/dist/simplemde.min.css';
-import './font-awesome.css';
+// import './font-awesome.css';
+import './iconfont/iconfont.css';
+import {getHeadingFunction, getUploadFunction} from './functions'
 
 export default {
   name: 'md-editor',
@@ -50,6 +52,85 @@ export default {
     if (isActive) editor.toggleFullScreen();
   },
   methods: {
+    getToolFunction(toolbar) {
+
+      function updateLineInfo(editor) {
+        const cm = editor.codemirror
+        var line = cm.getCursor().line, handle = cm.getLineHandle(line);
+        console.log('line', line, handle)
+        if (handle == currentHandle && line == currentLine) return;
+        if (currentHandle) {
+          cm.setLineClass(currentHandle, null, null);
+          cm.clearMarker(currentHandle);
+        }
+        currentHandle = handle; currentLine = line;
+        cm.setLineClass(currentHandle, null, "activeline");
+        cm.setMarker(currentHandle, String(line + 1));
+      } 
+      const functions = [
+        {
+            name: "bold",
+            action: SimpleMDE.toggleBold,
+            className: "iconfont icon-bold",
+            title: "加粗"
+        },{
+            name: "side-by-side",
+            action: SimpleMDE.toggleSideBySide,
+            className: "iconfont icon-preview",
+            title: "预览"
+        },{
+          name: "heading-3",
+            action: SimpleMDE.toggleHeading3,
+          className: "iconfont icon-h3", // Look for a suitable icon
+          title: "三级标题"
+        },{
+          name: "heading-4",
+          action: getHeadingFunction(4),
+          className: "iconfont icon-h4", // Look for a suitable icon
+          title: "四级标题"
+        },{
+          name: "heading-5",
+          action: getHeadingFunction(5),
+          className: "iconfont icon-h5", // Look for a suitable icon
+          title: "五级标题"
+        },
+        {
+          name: 'fullscreen',
+          action: this.handleFullScreen,
+          className: "iconfont icon-full-screen",
+          title: "全屏"
+        },
+        {
+          name: 'link',
+          action: SimpleMDE.drawLink,
+          className: "iconfont icon-link",
+          title: "插入链接"
+        }
+        // {
+        //   name: "redText",
+        //   action: function drawRedText(editor) {
+        //     var cm = editor.codemirror;
+        //     var output = '';
+        //     var selectedText = cm.getSelection();
+        //     var text = selectedText || 'placeholder';
+
+        //     output = '!!' + text + '!!';
+        //     cm.replaceSelection(output);
+        //   },
+        //   className: "fa fa-bold", // Look for a suitable icon
+        //   title: "Red text (Ctrl/Cmd-Alt-R)",
+        // },
+      ]
+      const output = []
+      toolbar.forEach((item, idx) => {
+        const findOne = functions.find(i => i.name === item)
+        if(findOne)
+          output[idx] = findOne
+        else
+          output[idx] = item
+      })
+      return output
+    },
     initialize() {
       const configs = {
         element: this.$el.firstElementChild,
@@ -62,7 +143,10 @@ export default {
           uniqueId: "md-editor",
           delay: 1000,
         },
-        status: ["autosave", "words"]
+        status: [
+          "autosave", 
+          // "words"
+        ]
       };
       Object.assign(configs, this.configs);
       // 判断是否开启代码高亮
@@ -70,7 +154,8 @@ export default {
         configs.renderingConfig.codeSyntaxHighlighting = true
       }
       if (this.toolbar) {
-        configs.toolbar = this.toolbar
+        const toolbar = this.getToolFunction(this.toolbar)
+        configs.toolbar = toolbar
       }
       // 实例化编辑器
       this.simplemde = new SimpleMDE(configs);
@@ -79,6 +164,19 @@ export default {
       this.addPreviewClass(className);
       // 绑定事件
       this.bindingEvents();
+    },
+    handleFullScreen() {
+      if(this.simplemde.isFullscreenActive()) {
+        this.simplemde.toggleFullScreen(this.simplemde)
+      }
+      else {
+        // 忽略 simplemde js 报错
+        try{
+          this.simplemde.toggleSideBySide(this.simplemde)
+        }
+        catch(e) {}
+        this.simplemde.toggleFullScreen(this.simplemde)
+      }
     },
     bindingEvents() {
       this.simplemde.codemirror.on('change', () => {
@@ -109,8 +207,17 @@ export default {
 .markdown-editor .markdown-body {
   padding: 0.5em
 }
+.markdown-editor .editor-toolbar {
+  line-height: initial;
+}
 .markdown-editor .editor-preview-active, .markdown-editor .editor-preview-active-side {
   display: block;
+}
+.markdown-editor .CodeMirror, .CodeMirror-scroll {
+  min-height: 120px;
+}
+.markdown-editor .CodeMirror pre {
+  line-height: 24px;
 }
 .markdown-editor .editor-toolbar.fullscreen, 
 .markdown-editor .editor-preview-side.editor-preview-active-side, 
