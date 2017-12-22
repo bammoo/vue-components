@@ -20,25 +20,25 @@ export default {
       type: Boolean,
       default() {
         return true;
-      },
+      }
     },
     highlight: {
       type: Boolean,
       default() {
         return false;
-      },
+      }
     },
     sanitize: {
       type: Boolean,
       default() {
         return false;
-      },
+      }
     },
     configs: {
       type: Object,
       default() {
         return {};
-      },
+      }
     },
   },
   mounted() {
@@ -52,20 +52,19 @@ export default {
   },
   methods: {
     getToolFunction(toolbar) {
-
-      function updateLineInfo(editor) {
-        const cm = editor.codemirror
-        var line = cm.getCursor().line, handle = cm.getLineHandle(line);
-        console.log('line', line, handle)
-        if (handle == currentHandle && line == currentLine) return;
-        if (currentHandle) {
-          cm.setLineClass(currentHandle, null, null);
-          cm.clearMarker(currentHandle);
-        }
-        currentHandle = handle; currentLine = line;
-        cm.setLineClass(currentHandle, null, "activeline");
-        cm.setMarker(currentHandle, String(line + 1));
-      } 
+      // function updateLineInfo(editor) {
+      //   const cm = editor.codemirror
+      //   var line = cm.getCursor().line, handle = cm.getLineHandle(line);
+      //   console.log('line', line, handle)
+      //   if (handle == currentHandle && line == currentLine) return;
+      //   if (currentHandle) {
+      //     cm.setLineClass(currentHandle, null, null);
+      //     cm.clearMarker(currentHandle);
+      //   }
+      //   currentHandle = handle; currentLine = line;
+      //   cm.setLineClass(currentHandle, null, "activeline");
+      //   cm.setMarker(currentHandle, String(line + 1));
+      // } 
       const functions = [
         {
             name: "bold",
@@ -181,6 +180,27 @@ export default {
       this.simplemde.codemirror.on('change', () => {
         this.$emit('input', this.simplemde.value());
       });
+      this.simplemde.codemirror.on('paste', (editor, e) => {
+        // console.log(e.clipboardData)
+        if(!(e.clipboardData && e.clipboardData.items)){
+          alert("该浏览器不支持操作");
+          return;
+        }
+        for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
+          var item = e.clipboardData.items[i];
+         // console.log(item.kind+":"+item.type);
+          if (item.kind === "string") {
+            item.getAsString(function (str) {
+                // str 是获取到的字符串
+            })
+          } else if (item.kind === "file") {
+            var pasteFile = item.getAsFile();
+            // pasteFile就是获取到的文件
+            console.log(pasteFile);
+            this.$emit('onPasteFile', pasteFile);
+          }
+        }
+      })
     },
     addPreviewClass(className) {
       const wrapper = this.simplemde.codemirror.getWrapperElement();
