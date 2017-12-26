@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import MarkdownIt from 'markdown-it'
 import SimpleMDE from 'simplemde'
 import 'simplemde/dist/simplemde.min.css'
 import './iconfont/iconfont.css'
@@ -130,7 +131,11 @@ export default {
       return output
     },
     initialize() {
+      const md = new MarkdownIt();
       const configs = {
+        previewRender: function(plainText) {
+          return md.render(plainText);
+        },
         element: this.$el.firstElementChild,
         initialValue: this.value,
         renderingConfig: {},
@@ -141,10 +146,7 @@ export default {
           uniqueId: "md-editor",
           delay: 1000,
         },
-        status: [
-          "autosave", 
-          // "words"
-        ]
+        status: false
       };
       Object.assign(configs, this.configs);
       // 判断是否开启代码高亮
@@ -158,8 +160,8 @@ export default {
       // 实例化编辑器
       this.simplemde = new SimpleMDE(configs);
       // 添加自定义 previewClass
-      const className = this.previewClass || '';
-      this.addPreviewClass(className);
+      // const className = this.previewClass || '';
+      // this.addPreviewClass(className);
       // 绑定事件
       this.bindingEvents();
     },
@@ -177,10 +179,14 @@ export default {
       }
     },
     bindingEvents() {
+      this.simplemde.codemirror.on('focus', () => {
+        this.$emit('focus', this.simplemde);
+      });
       this.simplemde.codemirror.on('change', () => {
         this.$emit('input', this.simplemde.value());
       });
-      this.simplemde.codemirror.on('paste', (editor, e) => {
+      this.simplemde.codemirror.on('paste', (codemirror, e) => {
+        console.log('editor', codemirror)
         // console.log(e.clipboardData)
         if(!(e.clipboardData && e.clipboardData.items)){
           alert("该浏览器不支持操作");
@@ -196,8 +202,8 @@ export default {
           } else if (item.kind === "file") {
             var pasteFile = item.getAsFile();
             // pasteFile就是获取到的文件
-            console.log(pasteFile);
-            this.$emit('onPasteFile', pasteFile);
+            // console.log(pasteFile);
+            this.$emit('onPasteFile', {codemirror, pasteFile});
           }
         }
       })
@@ -228,6 +234,10 @@ export default {
 }
 .markdown-editor .editor-toolbar {
   line-height: initial;
+  border-color: #ddd;
+}
+.markdown-editor .CodeMirror {
+  border-color: #eee;
 }
 .markdown-editor .editor-preview-active, .markdown-editor .editor-preview-active-side {
   display: block;
