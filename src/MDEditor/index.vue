@@ -160,8 +160,7 @@ export default {
       // 实例化编辑器
       this.simplemde = new SimpleMDE(configs);
       // 添加自定义 previewClass
-      // const className = this.previewClass || '';
-      // this.addPreviewClass(className);
+      this.previewClass && this.addPreviewClass(this.previewClass)
       // 绑定事件
       this.bindingEvents();
     },
