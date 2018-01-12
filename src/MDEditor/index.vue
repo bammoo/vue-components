@@ -162,7 +162,7 @@ export default {
       // 添加自定义 previewClass
       this.previewClass && this.addPreviewClass(this.previewClass)
       // 绑定事件
-      this.bindingEvents();
+      this.bindingEvents()
     },
     handleFullScreen() {
       if(this.simplemde.isFullscreenActive()) {
@@ -181,8 +181,9 @@ export default {
       this.simplemde.codemirror.on('focus', () => {
         this.$emit('focus', this.simplemde);
       });
-      this.simplemde.codemirror.on('change', () => {
-        this.$emit('input', this.simplemde.value());
+      this.simplemde.codemirror.on('change', (codemirror, changeObj) => {
+        if(changeObj.origin !== "setValue")
+          this.$emit('input', this.simplemde.value());
       });
       this.simplemde.codemirror.on('paste', (codemirror, e) => {
         console.log('editor', codemirror)
