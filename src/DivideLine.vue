@@ -1,3 +1,14 @@
+<script>
+export default {
+  name: 'divide-line',
+  props: ['color']
+}
+</script>
+
+<template>
+<span :style='{"border-left-color": color}' class='divideLine'>|</span>
+</template>
+
 <style scoped>
 .divideLine {
   border-left: 1px solid #eee;
@@ -9,13 +20,3 @@
   line-height: 13px;
 }
 </style>
-
-<template>
-<span :style='{"border-left-color": color}' class='divideLine'>|</span>
-</template>
-
-<script>
-export default {
-  props: ['color']
-}
-</script>
