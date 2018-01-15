@@ -1,6 +1,9 @@
 <script>
+import DivideLine from 'componentPath/DivideLine.vue'
+
 export default {
   name: 'iframe-preview',
+  components: {DivideLine},
   props: [
     'src', 
     'show'
@@ -38,6 +41,9 @@ export default {
                      </span>
                   </a>
                </li>
+               <li>
+                  <DivideLine style='line-height: 46px;'></DivideLine>
+               </li>
                <li class="select-dropdown__option">
                   <a class="select-dropdown__item is-selected has-icon" :class='{active: device=="tablet"}' @click="device='tablet'" role="menuitem" tabindex="0" aria-selected="true">
                      <span class="select-dropdown__item-text">
@@ -45,6 +51,9 @@ export default {
                         Tablet
                      </span>
                   </a>
+               </li>
+               <li>
+                  <DivideLine style='line-height: 46px;'></DivideLine>
                </li>
                <li class="select-dropdown__option">
                   <a class="select-dropdown__item has-icon" :class='{active: device=="phone"}' @click="device='phone'" role="menuitem" tabindex="0" aria-selected="false">
