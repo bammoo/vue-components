@@ -68,18 +68,28 @@ export default {
       // } 
       const functions = [
         {
-            name: "bold",
-            action: SimpleMDE.toggleBold,
-            className: "iconfont icon-bold",
-            title: "加粗"
+          name: "bold",
+          action: SimpleMDE.toggleBold,
+          className: "iconfont icon-bold",
+          title: "加粗"
         },{
-            name: "side-by-side",
-            action: SimpleMDE.toggleSideBySide,
-            className: "iconfont icon-preview",
-            title: "预览"
+          name: "list-ol",
+          action: SimpleMDE.toggleOrderedList,
+          className: "iconfont icon-list-ol",
+          title: "有序列表"
+        },{
+          name: "list-ul",
+          action: SimpleMDE.toggleUnorderedList,
+          className: "iconfont icon-list-ul",
+          title: "无序列表"
+        },{
+          name: "side-by-side",
+          action: SimpleMDE.toggleSideBySide,
+          className: "iconfont icon-preview",
+          title: "预览"
         },{
           name: "heading-3",
-            action: SimpleMDE.toggleHeading3,
+          action: SimpleMDE.toggleHeading3,
           className: "iconfont icon-h3", // Look for a suitable icon
           title: "三级标题"
         },{
