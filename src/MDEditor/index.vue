@@ -73,6 +73,19 @@ export default {
           className: "iconfont icon-bold",
           title: "加粗"
         },{
+          name: "gray-color",
+          action: function drawRedText(editor) {
+            var cm = editor.codemirror;
+            var output = '';
+            var selectedText = cm.getSelection();
+            var text = selectedText || 'placeholder';
+
+            output = '*' + text + '*';
+            cm.replaceSelection(output);
+          },
+          className: "iconfont icon-font",
+          title: "灰色"
+        },{
           name: "list-ol",
           action: SimpleMDE.toggleOrderedList,
           className: "iconfont icon-list-ol",
@@ -115,20 +128,6 @@ export default {
           className: "iconfont icon-link",
           title: "插入链接"
         }
-        // {
-        //   name: "redText",
-        //   action: function drawRedText(editor) {
-        //     var cm = editor.codemirror;
-        //     var output = '';
-        //     var selectedText = cm.getSelection();
-        //     var text = selectedText || 'placeholder';
-
-        //     output = '!!' + text + '!!';
-        //     cm.replaceSelection(output);
-        //   },
-        //   className: "fa fa-bold", // Look for a suitable icon
-        //   title: "Red text (Ctrl/Cmd-Alt-R)",
-        // },
       ]
       const output = []
       toolbar.forEach((item, idx) => {
