@@ -96,6 +96,11 @@ export default {
           className: "iconfont icon-list-ul",
           title: "无序列表"
         },{
+          name: "table",
+          action: SimpleMDE.drawTable,
+          className: "iconfont icon-table",
+          title: "插入表格"
+        },{
           name: "side-by-side",
           action: SimpleMDE.toggleSideBySide,
           className: "iconfont icon-preview",
