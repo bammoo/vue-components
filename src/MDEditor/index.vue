@@ -106,6 +106,16 @@ export default {
           className: "iconfont icon-preview",
           title: "预览"
         },{
+          name: "heading-1",
+          action: SimpleMDE.toggleHeading1,
+          className: "iconfont icon-h1", // Look for a suitable icon
+          title: "一级标题"
+        },{
+          name: "heading-2",
+          action: SimpleMDE.toggleHeading2,
+          className: "iconfont icon-h2", // Look for a suitable icon
+          title: "二级标题"
+        },{
           name: "heading-3",
           action: SimpleMDE.toggleHeading3,
           className: "iconfont icon-h3", // Look for a suitable icon
