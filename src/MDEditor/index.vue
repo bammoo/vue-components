@@ -174,7 +174,7 @@ export default {
       // 实例化编辑器
       this.simplemde = new SimpleMDE(configs);
       // 添加自定义 previewClass
-      this.previewClass && this.addPreviewClass(this.previewClass)
+      // this.previewClass && this.addPreviewClass(this.previewClass)
       // 绑定事件
       this.bindingEvents()
     },
@@ -225,9 +225,11 @@ export default {
     addPreviewClass(className) {
       const wrapper = this.simplemde.codemirror.getWrapperElement();
       const preview = document.createElement('div');
+      // 没起作用，每次 fullscreen 后 className 就没了
       wrapper.nextSibling.className += ` ${className}`;
       preview.className = `editor-preview ${className}`;
-      wrapper.appendChild(preview);
+      // 也没起作用
+      wrapper.nextSibling.appendChild(preview);
     }
   },
   destroyed() {
@@ -251,6 +253,7 @@ export default {
   border-color: #ddd;
 }
 .markdown-editor .CodeMirror {
+  box-sizing: border-box;
   border-color: #eee;
 }
 .markdown-editor .editor-preview-active, .markdown-editor .editor-preview-active-side {
