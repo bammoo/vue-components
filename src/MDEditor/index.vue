@@ -155,7 +155,9 @@ export default {
       return output
     },
     initialize() {
-      const md = new MarkdownIt();
+      const md = new MarkdownIt({
+        html: true
+      });
       const configs = {
         previewRender: function(plainText) {
           return md.render(plainText);
