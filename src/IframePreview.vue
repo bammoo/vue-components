@@ -4,13 +4,32 @@ import DivideLine from 'componentPath/DivideLine.vue'
 export default {
   name: 'iframe-preview',
   components: {DivideLine},
-  props: [
-    'src', 
-    'show'
-  ],
+  props: {
+    'src': {
+      type: String,
+      default: false
+    },
+    'desktop': {
+      type: Boolean,
+      default: false
+    }, 
+    'phone': {
+      type: Boolean,
+      default: false
+    }, 
+    'tablet': {
+      type: Boolean,
+      default: false
+    },  
+    'show': {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
+    const device = this.phone ? 'phone' : (this.tablet ? 'tablet' : this.desktop ? 'desktop' : 'phone')
     return {
-      device: 'phone'
+      device
     }
   },
   computed: {
