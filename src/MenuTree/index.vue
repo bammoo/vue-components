@@ -38,7 +38,7 @@
 </div>
 </template>
 
-<style>
+<style lang='less'>
 .tree-node-root.dragging  .tree-node-name {
     pointer-events: none;
 }
@@ -46,7 +46,7 @@
   border: transparent;
 }
 
-// label 右边加 箭头
+/*label 右边加 箭头*/
 .tree-node-root .el-tree-node__content .el-tree-node__label{
   &:after{
     font-family: 'element-icons' !important;
