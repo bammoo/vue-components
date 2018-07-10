@@ -257,16 +257,21 @@ export default {
 </script>
 
 <style>
+/* MDEditor/index.vue */
+.markdown-editor {
+  border-radius: 2px;
+  border: 1px solid #d9d9dd;
+}
 .markdown-editor .markdown-body {
   padding: 0.5em
 }
 .markdown-editor .editor-toolbar {
   line-height: initial;
-  border-color: #ddd;
+  border: none;
 }
 .markdown-editor .CodeMirror {
   box-sizing: border-box;
-  border-color: #eee;
+  border: none;
 }
 .markdown-editor .editor-preview-active, .markdown-editor .editor-preview-active-side {
   display: block;
